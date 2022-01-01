@@ -20,9 +20,7 @@ async function run() {
         const database = client.db("teamCommerce");
         const productsCollection = database.collection("products");
 
-        app.get('/trail', async(req, res) => {
-            res.json('response came here')
-        })
+
 
     } finally {
         // await client.close();
@@ -30,6 +28,9 @@ async function run() {
 }
 run().catch(console.dir);
 
+app.get('/trail', async(req, res) => {
+    res.json('response came here')
+})
 
 app.listen(port, () => {
     console.log('server running at port' + port);
