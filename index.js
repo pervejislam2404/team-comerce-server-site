@@ -20,7 +20,9 @@ async function run() {
         const database = client.db("teamCommerce");
         const productsCollection = database.collection("products");
 
-
+        app.get('/mongo', async(req, res) => {
+            res.json('response came from mongodb')
+        })
 
     } finally {
         // await client.close();
