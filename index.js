@@ -22,10 +22,9 @@ async function run() {
 
         app.get('/products', async(req, res) => {
             const query = {};
-            const result = productsCollection.find(query);
+            const result = await productsCollection.find(query).toArray();
             res.json(result);
         })
-
 
 
 
