@@ -46,7 +46,7 @@ async function run() {
   try {
     await client.connect();
     const database = client.db("teamCommerce");
-    const productsCollection = database.collection("products");
+    // const productsCollection = database.collection("products");
 
     const mainProductsCollection = database.collection("mainProducts");
 
@@ -54,16 +54,16 @@ async function run() {
     const usersCollection = database.collection("users");
     const orderCollection = database.collection("order");
 
-    app.get("/products", async (req, res) => {
-      const query = {};
-      const result = await productsCollection.find(query).toArray();
-      res.json(result);
-    });
+    // app.get("/products", async (req, res) => {
+    //   const query = {};
+    //   const result = await productsCollection.find(query).toArray();
+    //   res.json(result);
+    // });
 
     app.get("/singleProductDetail/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectID(id) };
-      const result = await productsCollection.findOne(query);
+      const result = await mainProductsCollection.findOne(query);
       res.json(result);
     });
 
@@ -84,11 +84,17 @@ async function run() {
     //     }
     // })
 
-    ///////////////////////// orders /////////////////////////////
+
+  //  users-orders-collection
+
     app.post("/order", async (req, res) => {
       const result = await orderCollection.insertOne(req.body);
       res.json(result);
     });
+
+
+    // updating-user-orders
+
     app.put("/order", async (req, res) => {
       const find = await orderCollection.findOne({
         _id: ObjectID(req?.body?._id),
@@ -108,6 +114,9 @@ async function run() {
       res.json(result);
     });
 
+
+    // getting-single-user-ordered-product
+
     app.get("/order/:id", async (req, res) => {
       const result = await orderCollection.findOne({
         _id: ObjectID(req.params.id),
@@ -116,6 +125,8 @@ async function run() {
     });
 
 
+    // getting-user-order-by-email
+
     app.get("/orders/:email", async (req, res) => {
       const result = await orderCollection
         .find({ email: req.params.email })
@@ -123,12 +134,18 @@ async function run() {
       res.json(result);
     });
 
+
+    // deleting-an-ordered-product
+
     app.delete("/order/:id", async (req, res) => {
       const result = await orderCollection.deleteOne({
         _id: ObjectID(req.params.id),
       });
       res.json(result);
     });
+
+
+    // getting-all-orders
 
     app.get("/allOrders", async (req, res) => {
       const result = await orderCollection.find({}).toArray();
@@ -171,13 +188,6 @@ async function run() {
     // stripe
 
 
-
-    
-
-    app.get('/trailTest', async (req, res) => {
-      res.json('came to trail')
-    })
-
     // all-products-from-database
 
     app.get('/getAllProducts', async(req, res)=>{
@@ -187,7 +197,7 @@ async function run() {
     })
 
 
-    // get-data-by-category
+    // get-products-by-category
     
     app.get('/getProductByCategory/:category', async (req, res)=>{
       const category = req.params.category;
