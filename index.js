@@ -51,6 +51,10 @@ async function run() {
         await client.connect();
         const database = client.db("teamCommerce");
         const productsCollection = database.collection("products");
+
+        const allProductsCollection = database.collection("mainProducts");
+
+
         const usersCollection = database.collection("users");
         const orderCollection = database.collection("order");
 
@@ -137,6 +141,12 @@ async function run() {
       });
       /////////////////// orders /////////////////////////////
 
+
+      app.post('/setProducts', async(req, res)=>{
+        const products = "";
+        const result = await allProductsCollection.insertMany(products);
+        res.json(result);
+      })
 
     } finally {
         // await client.close();
