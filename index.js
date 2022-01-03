@@ -198,13 +198,7 @@ async function run() {
       res.json(result);
     })
 
-
-    // getting-all-top-products
-    
-    app.get('/getTopProducts', async (req, res)=>{
-      const result = await topProductsCollection.find({}).toArray();
-      res.json(result);
-    })
+ 
 
   } finally {
     // await client.close();
