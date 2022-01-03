@@ -46,19 +46,12 @@ async function run() {
   try {
     await client.connect();
     const database = client.db("teamCommerce");
-    // const productsCollection = database.collection("products");
 
     const mainProductsCollection = database.collection("mainProducts");
-
-
     const usersCollection = database.collection("users");
     const orderCollection = database.collection("order");
 
-    // app.get("/products", async (req, res) => {
-    //   const query = {};
-    //   const result = await productsCollection.find(query).toArray();
-    //   res.json(result);
-    // });
+  
 
     app.get("/singleProductDetail/:id", async (req, res) => {
       const id = req.params.id;
@@ -75,16 +68,7 @@ async function run() {
       res.json(result);
     });
 
-    // app.get('/tokenTest',verifyToken, async(req, res) => {
-    //     if(req?.decodedEmail){
-    //         res.json("got token")
-    //     }else{
-
-    //         res.json("token no found")
-    //     }
-    // })
-
-
+    
   //  users-orders-collection
 
     app.post("/order", async (req, res) => {
@@ -206,6 +190,12 @@ async function run() {
       res.json(result)
     })
     
+    // getting-all-users
+
+    app.get('/getAllUsers', async (req, res)=>{
+      const result = await usersCollection.find({}).toArray();
+      res.json(result);
+    })
 
 
   } finally {
