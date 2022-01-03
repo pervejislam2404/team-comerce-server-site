@@ -200,7 +200,7 @@ async function run() {
 
 
     // making-admin
-    
+
     app.put('/admin/:email', async (req, res)=>{
       const email = req.params.email;
       const query = {email: email};
@@ -210,7 +210,11 @@ async function run() {
         },
       };
       const result = await usersCollection.updateOne(query,updateDoc);
-      res.json(result);
+      if(result?.modifiedCount){
+        res.json(true);
+      }else{
+        res.json(false);
+      }
     })
  
 
