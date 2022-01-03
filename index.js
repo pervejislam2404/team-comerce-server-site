@@ -198,6 +198,20 @@ async function run() {
       res.json(result);
     })
 
+
+    // making-admin
+    
+    app.put('/admin/:email', async (req, res)=>{
+      const email = req.params.email;
+      const query = {email: email};
+      const updateDoc = {
+        $set: {
+          role: 'admin',
+        },
+      };
+      const result = await usersCollection.updateOne(query,updateDoc);
+      res.json(result);
+    })
  
 
   } finally {
