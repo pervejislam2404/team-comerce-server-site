@@ -6,6 +6,7 @@ const cors = require("cors");
 const ObjectID = require("mongodb").ObjectID;
 const { MongoClient } = require("mongodb");
 
+
 const stripe = require("stripe")(
   "sk_test_51K7XyvJKxcqmkg6LlvMHDC3yRwCNyOGW1tihmm5BCMJPWieO3ung0ai0whkjX1thpnkbVn9mDFm5N3GDq45wecda00LX5KYuZJ"
 );
@@ -46,6 +47,10 @@ async function run() {
     await client.connect();
     const database = client.db("teamCommerce");
     const productsCollection = database.collection("products");
+
+    const mainProductsCollection = database.collection("mainProducts");
+
+
     const usersCollection = database.collection("users");
     const orderCollection = database.collection("order");
 
@@ -109,6 +114,8 @@ async function run() {
       });
       res.json(result);
     });
+
+
     app.get("/orders/:email", async (req, res) => {
       const result = await orderCollection
         .find({ email: req.params.email })
@@ -143,6 +150,9 @@ async function run() {
         clientSecret: paymentIntent.client_secret,
       });
     });
+
+
+
     app.put("/payment/:id", async (req, res) => {
       const find = await orderCollection.findOne({
         _id: ObjectID(req?.params?.id),
@@ -155,6 +165,22 @@ async function run() {
       res.json(result);
     });
     //////////////////// stripe///////////////////////////////
+
+
+
+    
+
+    app.get('/trailTest', async (req, res) => {
+      res.json('came to trail')
+    })
+
+    app.get('/gelAllProducts', async(req, res)=>{
+      const query = {};
+      const result = await mainProductsCollection.find(query).toArray;
+      res.json(result);
+    })
+
+
   } finally {
     // await client.close();
   }
