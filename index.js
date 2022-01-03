@@ -134,8 +134,11 @@ async function run() {
       const result = await orderCollection.find({}).toArray();
       res.json(result);
     });
-    /////////////////// orders /////////////////////////////
-    //////////////////// stripe///////////////////////////////
+    
+
+
+    // payment-method-stripe-manipulation
+
     app.post("/create-payment-intent", async (req, res) => {
       const paymentInfo = req.body.totalShoppingCost;
       const amount = paymentInfo * 100;
@@ -164,7 +167,8 @@ async function run() {
       const result = await orderCollection.updateOne(find, updateDoc);
       res.json(result);
     });
-    //////////////////// stripe///////////////////////////////
+ 
+    // stripe
 
 
 
@@ -176,7 +180,7 @@ async function run() {
 
     app.get('/gelAllProducts', async(req, res)=>{
       const query = {};
-      const result = await mainProductsCollection.find(query).toArray;
+      const result = await mainProductsCollection.find(query).toArray();
       res.json(result);
     })
 
