@@ -178,11 +178,24 @@ async function run() {
       res.json('came to trail')
     })
 
-    app.get('/gelAllProducts', async(req, res)=>{
+    // all-products-from-database
+
+    app.get('/getAllProducts', async(req, res)=>{
       const query = {};
       const result = await mainProductsCollection.find(query).toArray();
       res.json(result);
     })
+
+
+    // get-data-by-category
+    
+    app.get('/getProductByCategory/:category', async (req, res)=>{
+      const category = req.params.category;
+      const query = { category: category};
+      const result = await  mainProductsCollection.find(query).toArray();
+      res.json(result)
+    })
+    
 
 
   } finally {
