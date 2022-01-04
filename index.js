@@ -280,7 +280,7 @@ async function run() {
 
     app.put('/orderStatusUpdate', async (req, res)=>{
       const id = req.body.id;
-      const status = req.body.stock;
+      const status = req.body.status;
       const query = {_id: ObjectID(id)}
       const options = { upsert: true };
       const updateDoc = {
