@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-var admin = require("firebase-admin");
+// var admin = require("firebase-admin");
 const cors = require("cors");
 const ObjectID = require("mongodb").ObjectID;
 const { MongoClient } = require("mongodb");
@@ -17,11 +17,11 @@ dotenv.config();
 const port = process.env.PORT || 4000;
 
 // jwt
-const serviceAccount = require("./team-commerce-firebase-adminsdk.json");
+// const serviceAccount = require("./team-commerce-firebase-adminsdk.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+// });
 
 // jwt
 
@@ -30,16 +30,16 @@ const client = new MongoClient(uri);
 
 // jwt
 
-async function verifyToken(req, res, next) {
-  if (req?.headers?.authorization?.startsWith("Bearer ")) {
-    const token = req.headers?.authorization.split(" ")[1];
-    try {
-      const decodedUser = await admin.auth().verifyIdToken(token);
-      req.decodedEmail = decodedUser.email;
-    } catch {}
-  }
-  next();
-}
+// async function verifyToken(req, res, next) {
+//   if (req?.headers?.authorization?.startsWith("Bearer ")) {
+//     const token = req.headers?.authorization.split(" ")[1];
+//     try {
+//       const decodedUser = await admin.auth().verifyIdToken(token);
+//       req.decodedEmail = decodedUser.email;
+//     } catch {}
+//   }
+//   next();
+// }
 // jwt
 
 async function run() {
@@ -289,6 +289,16 @@ async function run() {
       };
       const result = await orderCollection.updateOne(query, updateDoc);
       res.json(result)
+    })
+
+
+    // delete-product
+
+    app.delete('/deleteProduct/:id', async (req, res)=>{
+      const id = req.params.id;
+      const query = {_id: ObjectID(id)}
+      const result = await mainProductsCollection.deleteOne(query);
+      res.json(result);
     })
 
 
