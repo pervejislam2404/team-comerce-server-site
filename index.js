@@ -275,6 +275,24 @@ async function run() {
     })
 
 
+    
+    // update-order-status
+
+    app.put('/orderStatusUpdate', async (req, res)=>{
+      const id = req.body.id;
+      const status = req.body.stock;
+      const query = {_id: ObjectID(id)}
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          status: status,
+        },
+      };
+      const result = await orderCollection.updateOne(query, updateDoc, options);
+      res.json(result)
+    })
+
+
   } finally {
     // await client.close();
   }
