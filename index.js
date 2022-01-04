@@ -50,7 +50,7 @@ async function run() {
     const mainProductsCollection = database.collection("mainProducts");
     const usersCollection = database.collection("users");
     const orderCollection = database.collection("order");
-    const topProductsCollection = database.collection("topProducts");
+    const reviewsCollection = database.collection("reviews");
 
   
 
@@ -82,6 +82,10 @@ async function run() {
             const result = await usersCollection.updateOne(filter, updateDocs, upsert);
             res.send(result)
     });
+
+
+
+
 
     
   //  users-orders-collection
@@ -260,6 +264,16 @@ async function run() {
       res.json(result)
     })
  
+
+
+    // save-user-review
+
+    app.post('/saveUserReview', async (req, res,)=>{
+      const review= req.body;
+      const result = await reviewsCollection.insertOne(review);
+      res.json(result);
+    })
+
 
   } finally {
     // await client.close();
