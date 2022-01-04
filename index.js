@@ -230,6 +230,21 @@ async function run() {
         res.json(false)
       }
     })
+
+
+    // updating-stock
+
+    app.put('/updateStock', async (req, res)=>{
+      const product = req.body;
+      const query = {_id: ObjectID(product?.id)}
+      const updateDoc = {
+        $set: {
+          stock: product?.stock,
+        },
+      };
+      const result = await mainProductsCollection.updateOne(query, updateDoc);
+      res.json(result)
+    })
  
 
   } finally {
