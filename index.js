@@ -69,6 +69,20 @@ async function run() {
       res.json(result);
     });
 
+
+    // updating-user-if-exist
+    
+    app.put("/saveUser", async (req, res) => {
+            const user = req.body;
+            const upsert = { upsert: true };
+            const filter = { email: user.email };
+            const updateDocs = {
+                $set: { email: user.email, name: user.name },
+            };
+            const result = await usersCollection.updateOne(filter, updateDocs, upsert);
+            res.send(result)
+    });
+
     
   //  users-orders-collection
 
