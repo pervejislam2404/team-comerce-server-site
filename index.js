@@ -301,6 +301,13 @@ async function run() {
       res.json(result);
     })
 
+    // get-all-review
+
+    app.get('/getAllReviews', async (req, res)=>{
+      const result =await reviewsCollection.find({}).toArray();
+      res.json(result);
+    })
+
 
   } finally {
     // await client.close();
